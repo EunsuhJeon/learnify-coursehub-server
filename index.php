@@ -1,4 +1,5 @@
 <?php
+require("./src/config/webconfig.php");
 session_start();
 
 $request = $_SERVER['REQUEST_URI'];
