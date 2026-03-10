@@ -4,6 +4,7 @@ require __DIR__ . '/webconfig.php';
 class Database{
     private static $instance = null;
     private $pdo;
+    // to make object only once
     private function __construct()
     {
         $dsn = "mysql:host=".DB_SERVER.";dbname=".DB_NAME.";charset=utf8mb4";
