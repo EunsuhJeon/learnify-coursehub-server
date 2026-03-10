@@ -30,6 +30,10 @@ class AuthController
             errorResponse('Password must be at least 8 characters long.', 422);
         }
 
+        if (strlen($password) > 72) {
+            errorResponse('Password must be less than 72 characters long.', 422);
+        }
+
         $checkStmt = $this->pdo->prepare("SELECT user_id FROM users WHERE email = :email LIMIT 1");
         $checkStmt->execute(['email' => $email]);
         $existingUser = $checkStmt->fetch(PDO::FETCH_ASSOC);
@@ -54,6 +58,8 @@ class AuthController
         ]);
 
         ensureSessionStarted();
+        // to prevent session hijacking
+        session_regenerate_id(true);
         $newUserId = (int)$this->pdo->lastInsertId();
 
         $_SESSION['user_id'] = $newUserId;
