@@ -38,8 +38,8 @@ class ReviewController
             LIMIT 50
         ");
 
-        $stms->execute(['course_id' => $courseId]);
-        $reviews = $stms->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->execute(['course_id' => $courseId]);
+        $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         successResponse([
             'course_id' => $courseId,

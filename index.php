@@ -23,6 +23,12 @@ if ($requestPath === '/register' && $method === 'POST') {
 } elseif ($requestPath === '/login' && $method === 'POST') {
     $authController = new AuthController();
     $authController->login();
+} elseif ($requestPath === '/logout' && $method === 'POST') {
+    $authController = new AuthController();
+    $authController->logout();
+} elseif ($requestPath === '/me' && $method === 'GET') {
+    $authController = new AuthController();
+    $authController->me();
 } elseif ($requestPath === '/' && $method === 'GET') {
     successResponse([
         'project' => 'Learnify API'
@@ -39,7 +45,6 @@ if ($requestPath === '/register' && $method === 'POST') {
 } elseif (preg_match('#^/courses/(\d+)/reviews$#', $requestPath, $m) && $method === 'POST') {
     $controller = new ReviewController();
     $controller->store($m[1]);
-}
-else {
+} else {
     errorResponse('Route not found: ' . $requestPath, 404);
 }
