@@ -117,4 +117,12 @@ class AuthController
             ]
         ], 'Login successful.');
     }
+
+    public function logout(){
+    ensureSessionStarted();
+    $_SESSION = [];
+    session_destroy();
+
+    successResponse([], 'Logout successful.');
+    }
 }
