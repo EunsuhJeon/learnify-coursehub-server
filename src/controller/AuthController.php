@@ -119,13 +119,14 @@ class AuthController
     }
 
     // Method to logout correctly
+    // "/logout"
     public function logout()
     {
         ensureSessionStarted();
 
         $_SESSION = [];
 
-        // Delete cookies in the browser (or Postman)
+        // Delete session cookies in the browser (or Postman)
         if (ini_get('session.use_cookies')) {
             $params = session_get_cookie_params();
 
@@ -139,9 +140,37 @@ class AuthController
                 $params['httponly']
             );
         }
-        
+
         session_destroy();
 
         successResponse([], 'Logout successful.');
+    }
+
+    // To reassure who is authenticated
+    // "/me"
+    public function me()
+    {
+        // Helper to check if the session already exists
+        requireAuth();
+
+        // Get data for that user
+        $userId = (int) currentUserId();
+        $stmt = $this->pdo->prepare("
+            SELECT user_id, first_name, last_name, email, role
+            FROM users
+            WHERE user_id = :user_id
+            LIMIT 1
+        ");
+
+        $stmt->execute(['user_id' => $userId]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$user) {
+            errorResponse('User not found.', 404);
+        }
+
+        successResponse([
+            'user' => $user
+        ], 'Authenticated user retrieved successfully.');
     }
 }
