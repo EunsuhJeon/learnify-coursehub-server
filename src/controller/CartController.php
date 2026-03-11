@@ -120,4 +120,52 @@ class CartController
             'course_id' => $courseId
         ], 'Course added to cart successfully.', 201);
     }
+
+    public function destroy($cartId)
+    {
+        requireAuth();
+
+        $userId = (int) currentUserId();
+        $cartId = cleanInt($cartId);
+
+        // Check that the cart id is valid
+        if ($cartId === null) {
+            errorResponse('Valid cart_id is required.', 422);
+        }
+
+        // Validate ownership of the cart with the user_id
+        $checkStmt = $this->pdo->prepare("
+            SELECT cart_id
+            FROM cart_items
+            WHERE cart_id = :cart_id AND user_id = :user_id
+            LIMIT 1
+        ");
+
+        $checkStmt->execute([
+            'cart_id' => $cartId,
+            'user_id' => $userId
+        ]);
+
+        $cartItem = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$cartItem) {
+            errorResponse('Cart item not found.', 404);
+        }
+        // ----------------------------------------------------------------
+
+
+        // After validations, if everything is correct, then run the query to delete
+        // an item from the cart
+        $deleteStmt = $this->pdo->prepare("
+            DELETE FROM cart_items
+            WHERE cart_id = :cart_id AND user_id = :user_id
+        ");
+
+        $deleteStmt->execute([
+            'cart_id' => $cartId,
+            'user_id' => $userId
+        ]);
+
+        successResponse([], 'Cart item removed successfully.');
+    }
 }
