@@ -1,136 +1,39 @@
---
--- Dumping data for table `cart_items`
---
-
-INSERT INTO `cart_items` (`cart_id`, `user_id`, `course_id`, `added_at`) VALUES
-(1, 1, 106, '2026-03-10 20:47:04'),
-(2, 2, 107, '2026-03-10 20:47:04'),
-(3, 3, 108, '2026-03-10 20:47:04'),
-(4, 4, 109, '2026-03-10 20:47:04'),
-(5, 5, 110, '2026-03-10 20:47:04'),
-(6, 6, 111, '2026-03-10 20:47:04'),
-(7, 7, 112, '2026-03-10 20:47:04'),
-(8, 8, 113, '2026-03-10 20:47:04'),
-(9, 9, 114, '2026-03-10 20:47:04'),
-(10, 10, 115, '2026-03-10 20:47:04'),
-(11, 11, 116, '2026-03-10 20:47:04'),
-(12, 12, 117, '2026-03-10 20:47:04'),
-(13, 13, 118, '2026-03-10 20:47:04'),
-(14, 14, 119, '2026-03-10 20:47:04'),
-(15, 15, 120, '2026-03-10 20:47:04'),
-(16, 16, 121, '2026-03-10 20:47:04'),
-(17, 17, 122, '2026-03-10 20:47:04'),
-(18, 18, 123, '2026-03-10 20:47:04'),
-(19, 19, 124, '2026-03-10 20:47:04'),
-(20, 20, 125, '2026-03-10 20:47:04'),
-(21, 21, 126, '2026-03-10 20:47:04'),
-(22, 22, 127, '2026-03-10 20:47:04'),
-(23, 23, 128, '2026-03-10 20:47:04'),
-(24, 24, 129, '2026-03-10 20:47:04'),
-(25, 25, 130, '2026-03-10 20:47:04'),
-(26, 26, 131, '2026-03-10 20:47:04'),
-(27, 27, 132, '2026-03-10 20:47:04'),
-(28, 28, 133, '2026-03-10 20:47:04'),
-(29, 29, 134, '2026-03-10 20:47:04'),
-(30, 30, 105, '2026-03-10 20:47:04');
-
--- --------------------------------------------------------
 
 --
--- Dumping data for table `courses`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `courses` (`course_id`, `title`, `description`, `instructor_id`, `level`, `price`, `created_at`, `theme`, `duration`) VALUES
-(105, 'React Fundamentals', 'Learn the basics of React, components and hooks.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Tech', 6),
-(106, 'Advanced JavaScript', 'Deep dive into closures, async/await, and patterns.', 2, 'advanced', 0.00, '2026-03-04 20:20:30', 'Tech', 8),
-(107, 'Web Design Basics', 'HTML, CSS, and responsive design fundamentals.', 4, 'beginner', 0.00, '2026-03-04 20:20:30', 'Design', 5),
-(108, 'Node.js Essentials', 'Build backend services with Express and Node.js.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Tech', 7),
-(109, 'TypeScript in Practice', 'Strong typing, interfaces, and real-world TS projects.', 2, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Tech', 6),
-(110, 'Python for Data Analysis', 'Analyze datasets using Pandas and NumPy.', 3, 'beginner', 0.00, '2026-03-04 20:20:30', 'Data', 9),
-(111, 'UI/UX Design Principles', 'Design usable and beautiful digital experiences.', 4, 'beginner', 0.00, '2026-03-04 20:20:30', 'Design', 4),
-(112, 'Docker & Containers', 'Package and deploy apps using Docker.', 2, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Tech', 5),
-(113, 'REST APIs with Express', 'Create scalable RESTful APIs from scratch.', 2, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Tech', 6),
-(114, 'AWS Cloud Foundations', 'Understand core AWS services and architecture.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Tech', 7),
-(115, 'Next.js for Production', 'Build fast React apps with SSR and routing.', 2, 'advanced', 0.00, '2026-03-04 20:20:30', 'Tech', 6),
-(116, 'SQL for Developers', 'Master queries, joins, and indexes.', 3, 'beginner', 0.00, '2026-03-04 20:20:30', 'Data', 5),
-(117, 'GraphQL Essentials', 'Flexible APIs with Apollo and GraphQL.', 2, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Tech', 4),
-(118, 'Cybersecurity Basics', 'Protect systems and networks from attacks.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Tech', 6),
-(119, 'Machine Learning Intro', 'Supervised models and evaluation techniques.', 3, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Data', 8),
-(120, 'Kubernetes Fundamentals', 'Container orchestration and scaling.', 2, 'advanced', 0.00, '2026-03-04 20:20:30', 'Tech', 7),
-(121, 'Mobile Apps with React Native', 'Build cross-platform apps for iOS and Android.', 2, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Tech', 6),
-(122, 'DevOps Foundations', 'CI/CD pipelines and automation workflows.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Tech', 5),
-(123, 'Figma for Designers', 'Prototyping and collaboration for UI teams.', 4, 'beginner', 0.00, '2026-03-04 20:20:30', 'Design', 3),
-(124, 'Clean Code Practices', 'Write maintainable and readable software.', 2, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Tech', 4),
-(125, 'Blockchain Fundamentals', 'Distributed ledgers and smart contracts.', 2, 'beginner', 0.00, '2026-03-04 20:20:30', 'Tech', 6),
-(126, 'C# for Web Development', 'Build web apps using ASP.NET Core.', 2, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Tech', 7),
-(127, 'iOS Development with Swift', 'Create native apps for Apple devices.', 2, 'advanced', 0.00, '2026-03-04 20:20:30', 'Tech', 9),
-(128, 'Android with Kotlin', 'Modern Android app development techniques.', 2, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Tech', 8),
-(129, 'Power BI Analytics', 'Build dashboards and business insights.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Business', 5),
-(130, 'Excel for Professionals', 'Advanced formulas, pivot tables and automation.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Business', 4),
-(131, 'NoSQL with MongoDB', 'Document databases and schema design.', 3, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Data', 6),
-(132, 'Linux Command Line', 'Shell scripting and system navigation.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Tech', 3),
-(133, 'Ethical Hacking Intro', 'Pen testing concepts and methodologies.', 2, 'advanced', 0.00, '2026-03-04 20:20:30', 'Tech', 7),
-(134, 'Data Visualization with D3', 'Create interactive charts for the web.', 3, 'advanced', 0.00, '2026-03-04 20:20:30', 'Data', 6),
-(135, 'Project Management Agile', 'Scrum, Kanban and delivery strategies.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Business', 4),
-(136, 'Product Design Sprint', 'Validate ideas quickly using workshops.', 4, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Product', 5),
-(137, 'SEO Fundamentals', 'Optimize websites for search engines.', 4, 'beginner', 0.00, '2026-03-04 20:20:30', 'Marketing', 3),
-(138, 'Marketing Analytics', 'Track campaigns and ROI with data.', 4, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Marketing', 4),
-(139, 'Game Development Basics', 'Core loops and engines for indie games.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Tech', 6),
-(140, 'Unity for Developers', '3D game creation with Unity engine.', 2, 'advanced', 0.00, '2026-03-04 20:20:30', 'Tech', 9),
-(141, 'AI Prompt Engineering', 'Craft better prompts for large language models.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Tech', 2),
-(142, 'Natural Language Processing', 'Text analysis and transformers basics.', 3, 'advanced', 0.00, '2026-03-04 20:20:30', 'Data', 8),
-(143, 'Big Data with Spark', 'Distributed processing and analytics.', 3, 'advanced', 0.00, '2026-03-04 20:20:30', 'Data', 7),
-(144, 'Web Accessibility', 'Build inclusive apps following WCAG.', 4, 'beginner', 0.00, '2026-03-04 20:20:30', 'Design', 3),
-(145, 'Go for Backend Services', 'Fast APIs using Go and microservices.', 2, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Tech', 6),
-(146, 'Rust Fundamentals', 'Memory-safe systems programming.', 2, 'advanced', 0.00, '2026-03-04 20:20:30', 'Tech', 7),
-(147, 'Digital Marketing Foundations', 'Learn core concepts of online advertising, funnels and growth.', 4, 'beginner', 0.00, '2026-03-04 20:20:30', 'Marketing', 4),
-(148, 'Content Strategy & Branding', 'Create content plans and brand voice for social platforms.', 4, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Marketing', 5),
-(149, 'Paid Ads Mastery', 'Run high-converting campaigns on Google and Meta platforms.', 4, 'advanced', 0.00, '2026-03-04 20:20:30', 'Marketing', 6),
-(150, 'Email Marketing Automation', 'Build sequences and funnels with automation tools.', 4, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Marketing', 4),
-(151, 'Social Media Growth Playbook', 'Grow audiences and engagement organically.', 4, 'beginner', 0.00, '2026-03-04 20:20:30', 'Marketing', 3),
-(152, 'Startup Fundamentals', 'Validate ideas, build MVPs and launch products.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Business', 5),
-(153, 'Business Strategy Essentials', 'Competitive analysis and market positioning.', 1, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Business', 6),
-(154, 'Finance for Entrepreneurs', 'Cash flow, pricing models and budgeting basics.', 1, 'intermediate', 0.00, '2026-03-04 20:20:30', 'Business', 5),
-(155, 'Leadership & Team Management', 'Build strong teams and effective communication.', 1, 'beginner', 0.00, '2026-03-04 20:20:30', 'Business', 4),
-(156, 'Operations & Scaling', 'Systems, processes and growth frameworks.', 1, 'advanced', 0.00, '2026-03-04 20:20:30', 'Business', 6);
-
--- --------------------------------------------------------
-
---
--- Dumping data for table `enrollments`
---
-
-INSERT INTO `enrollments` (`enrollment_id`, `user_id`, `course_id`, `progress`, `enrolled_at`) VALUES
-(31, 1, 105, 20, '2026-03-10 20:47:04'),
-(32, 2, 106, 50, '2026-03-10 20:47:04'),
-(33, 3, 107, 100, '2026-03-10 20:47:04'),
-(34, 4, 108, 70, '2026-03-10 20:47:04'),
-(35, 5, 109, 30, '2026-03-10 20:47:04'),
-(36, 6, 110, 10, '2026-03-10 20:47:04'),
-(37, 7, 111, 0, '2026-03-10 20:47:04'),
-(38, 8, 112, 60, '2026-03-10 20:47:04'),
-(39, 9, 113, 90, '2026-03-10 20:47:04'),
-(40, 10, 114, 40, '2026-03-10 20:47:04'),
-(41, 11, 115, 25, '2026-03-10 20:47:04'),
-(42, 12, 116, 50, '2026-03-10 20:47:04'),
-(43, 13, 117, 70, '2026-03-10 20:47:04'),
-(44, 14, 118, 20, '2026-03-10 20:47:04'),
-(45, 15, 119, 80, '2026-03-10 20:47:04'),
-(46, 16, 120, 0, '2026-03-10 20:47:04'),
-(47, 17, 121, 30, '2026-03-10 20:47:04'),
-(48, 18, 122, 60, '2026-03-10 20:47:04'),
-(49, 19, 123, 90, '2026-03-10 20:47:04'),
-(50, 20, 124, 40, '2026-03-10 20:47:04'),
-(51, 21, 125, 10, '2026-03-10 20:47:04'),
-(52, 22, 126, 50, '2026-03-10 20:47:04'),
-(53, 23, 127, 70, '2026-03-10 20:47:04'),
-(54, 24, 128, 80, '2026-03-10 20:47:04'),
-(55, 25, 129, 60, '2026-03-10 20:47:04'),
-(56, 26, 130, 0, '2026-03-10 20:47:04'),
-(57, 27, 131, 20, '2026-03-10 20:47:04'),
-(58, 28, 132, 30, '2026-03-10 20:47:04'),
-(59, 29, 133, 50, '2026-03-10 20:47:04'),
-(60, 30, 134, 100, '2026-03-10 20:47:04');
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password_hash`, `role`, `created_at`) VALUES
+(1, 'Emma', 'Johnson', 'emma.johnson@example.com', '$2y$10$eKJtn6DVzg9JHiOPJPEOmeXYX5teD0LzkLElFRy5TVRg5M.oNs5ea', 'student', '2026-03-11 19:46:01'),
+(2, 'Liam', 'Williams', 'liam.williams@example.com', '$2y$10$D9A2PJA2JzyRoCsHmLiu6O28wcUwBAA6y/oQJR5oV4qR8Ojc1hdXS', 'student', '2026-03-11 19:46:01'),
+(3, 'Olivia', 'Brown', 'olivia.brown@example.com', '$2y$10$pp1CFL0EtqEJB0bNqhu.zONHn4YAFlMKQqOclBB4e7hEZYmH94Ih2', 'student', '2026-03-11 19:46:01'),
+(4, 'Noah', 'Jones', 'noah.jones@example.com', '$2y$10$GWm3zu.08KcJ/6n1QfA.Ruz8f/kxyrpduwIk5XFP.EN01nxqMP68C', 'student', '2026-03-11 19:46:01'),
+(5, 'Ava', 'Garcia', 'ava.garcia@example.com', '$2y$10$WHT9P.gFpCjXNRs5ZoR0cOHbt6edZENu.7NyYIe2ywwney46aaVp.', 'student', '2026-03-11 19:46:01'),
+(6, 'Elijah', 'Martinez', 'elijah.martinez@example.com', '$2y$10$LRWLjO6Ivq4rjZLJYrmqveuqprEozDCn7WdaoAIC581UwPcgpPUzO', 'student', '2026-03-11 19:46:01'),
+(7, 'Sophia', 'Rodriguez', 'sophia.rodriguez@example.com', '$2y$10$y1rUuDmWjK4SYrGHhx8.O.wiKqqQ0SDB4buRnySIsVOjS47vgkWYi', 'student', '2026-03-11 19:46:01'),
+(8, 'James', 'Lee', 'james.lee@example.com', '$2y$10$9/ks2hdfLnBFut7kagy87uULqheVGQ83j2iBQdKJnlTNBPOjTgXpC', 'student', '2026-03-11 19:46:01'),
+(9, 'Isabella', 'Walker', 'isabella.walker@example.com', '$2y$10$f.bDv7XiaAePo.H2QQ1byeAU8OYndZQ7G.6XvqbEWpArVvos9JH6S', 'student', '2026-03-11 19:46:01'),
+(10, 'Benjamin', 'Hall', 'benjamin.hall@example.com', '$2y$10$rZq8nbBy87lTeqklTi9GD.JZlMZH7l0B8RzXO78maSMje/d.mDDPS', 'student', '2026-03-11 19:46:01'),
+(11, 'Mia', 'Allen', 'mia.allen@example.com', '$2y$10$kab1yMHnt38.UXR47pEBV.G/NlPg37z74Er.5Vb.VV6EakGmrTiRe', 'student', '2026-03-11 19:46:01'),
+(12, 'Lucas', 'Young', 'lucas.young@example.com', '$2y$10$nm1FQdG7cbaJlpHh5NbHfOMJV.luoHxrpraDIbcWajSKjLhmwqPmm', 'student', '2026-03-11 19:46:02'),
+(13, 'Charlotte', 'Hernandez', 'charlotte.hernandez@example.com', '$2y$10$Vrv4D2X7mDLLTl58FBKagOdpXKGBAPASr0mXJCDXguiSe4VB0S2vO', 'student', '2026-03-11 19:46:02'),
+(14, 'Mason', 'King', 'mason.king@example.com', '$2y$10$T96GfC8XAuG7e6/pbW6d4.p42ski364DgLp0ohKnCtXmIdspIEt3G', 'student', '2026-03-11 19:46:02'),
+(15, 'Amelia', 'Wright', 'amelia.wright@example.com', '$2y$10$J9lNdTKFc3XfSmLSI/tg7OokAHSGvkAGIa6MKiFPRea5eZjzLx/oa', 'student', '2026-03-11 19:46:02'),
+(16, 'Ethan', 'Lopez', 'ethan.lopez@example.com', '$2y$10$9LJbCwPefaT93MNwuh8NfO8VbTcesFGG2Bra/fu7cg2eymbh2lKoC', 'student', '2026-03-11 19:46:02'),
+(17, 'Harper', 'Hill', 'harper.hill@example.com', '$2y$10$w7JXqoaqhZcDHmqbiMvca.BMfl76FiTocNjc7zmA2oldBZaSh95/u', 'student', '2026-03-11 19:46:02'),
+(18, 'Alexander', 'Scott', 'alexander.scott@example.com', '$2y$10$X53gFNdPcIhQiLk/BJkMxOUf3QKHIg6CQ8/cvyT1qT96l7qqR4TxG', 'student', '2026-03-11 19:46:02'),
+(19, 'Evelyn', 'Green', 'evelyn.green@example.com', '$2y$10$kQgwtqvBKIsT00gFbrcnfebVO2/zekyYLctFxZFwSr5OUtvCbE9bu', 'student', '2026-03-11 19:46:02'),
+(20, 'Henry', 'Adams', 'henry.adams@example.com', '$2y$10$jzIdP.CI1t49maIi2bllgOpMfVTFd7vifRyCdNley7mY4U5kP7SAK', 'student', '2026-03-11 19:46:02'),
+(21, 'Abigail', 'Baker', 'abigail.baker@example.com', '$2y$10$Ef3hcqR.mlNEiLGPQDfN8eLKIwB4nYBpPUTH8uH3WjlSuU2TG0hhe', 'student', '2026-03-11 19:46:02'),
+(22, 'Sebastian', 'Nelson', 'sebastian.nelson@example.com', '$2y$10$liyJt.He61UVZMFMCdT/MeIBlo6Ju.F5zMR4D3ovWAJD2yqdDh3hW', 'student', '2026-03-11 19:46:02'),
+(23, 'Ella', 'Carter', 'ella.carter@example.com', '$2y$10$dJLc2DdfoqAN8Fq/pfx4VOhjDRrEqJ.tr6e/Bx3a/iu71pvPKMt0W', 'student', '2026-03-11 19:46:02'),
+(24, 'Jack', 'Mitchell', 'jack.mitchell@example.com', '$2y$10$cOiAm5lOGLQ78V4zwrT56ud2ABxsmqDNl9qPvHLy7FOdTdo4BF3Au', 'student', '2026-03-11 19:46:02'),
+(25, 'Scarlett', 'Perez', 'scarlett.perez@example.com', '$2y$10$USKX15lCBzXTqWVu4CSF7.Nmda8YRRHeyLPqRhJQoAIpiPu7hQcPa', 'student', '2026-03-11 19:46:02'),
+(26, 'Owen', 'Roberts', 'owen.roberts@example.com', '$2y$10$T3HO9mifCad8pRDgCYOOaOzJogeal82zq8WO1WcmKNvtdJXPdpoey', 'student', '2026-03-11 19:46:02'),
+(27, 'Grace', 'Turner', 'grace.turner@example.com', '$2y$10$tXj0dWw93sFLSoQYh5lNSeaJG65II2P8U4AERhGKenuLi3Q5pYdIK', 'student', '2026-03-11 19:46:03'),
+(28, 'Leo', 'Phillips', 'leo.phillips@example.com', '$2y$10$RwqULVvOAYG2xBfMd2K6QuOjQlfZLLb2RYTEUObT1dwsMHuHKk8ve', 'student', '2026-03-11 19:46:03'),
+(29, 'Chloe', 'Campbell', 'chloe.campbell@example.com', '$2y$10$E1iaeCq6XHuRIKj9u1tOgOWVy9BfakXqnyl9TIGNcXSn06QzGI8iq', 'student', '2026-03-11 19:46:03'),
+(30, 'Daniel', 'Parker', 'daniel.parker@example.com', '$2y$10$PYGNMOU8Xtqf2JD4skacW.qUBcGV0QAONBEinLb/AnZCNb8jQqfJ6', 'student', '2026-03-11 19:46:03');
 
 -- --------------------------------------------------------
 
@@ -178,6 +81,141 @@ INSERT INTO `instructors` (`instructor_id`, `name`, `title`, `students_count`, `
 -- --------------------------------------------------------
 
 --
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`course_id`, `title`, `description`, `instructor_id`, `level`, `price`, `created_at`, `theme`, `duration`) VALUES
+(105, 'React Fundamentals', 'Learn the basics of React, components and hooks.', 1, 'beginner', 49.99, '2026-03-04 20:20:30', 'Tech', 6),
+(106, 'Advanced JavaScript', 'Deep dive into closures, async/await, and patterns.', 2, 'advanced', 69.99, '2026-03-04 20:20:30', 'Tech', 8),
+(107, 'Web Design Basics', 'HTML, CSS, and responsive design fundamentals.', 4, 'beginner', 39.99, '2026-03-04 20:20:30', 'Design', 5),
+(108, 'Node.js Essentials', 'Build backend services with Express and Node.js.', 1, 'beginner', 49.99, '2026-03-04 20:20:30', 'Tech', 7),
+(109, 'TypeScript in Practice', 'Strong typing, interfaces, and real-world TS projects.', 2, 'intermediate', 59.99, '2026-03-04 20:20:30', 'Tech', 6),
+(110, 'Python for Data Analysis', 'Analyze datasets using Pandas and NumPy.', 3, 'beginner', 59.99, '2026-03-04 20:20:30', 'Data', 9),
+(111, 'UI/UX Design Principles', 'Design usable and beautiful digital experiences.', 4, 'beginner', 44.99, '2026-03-04 20:20:30', 'Design', 4),
+(112, 'Docker & Containers', 'Package and deploy apps using Docker.', 2, 'intermediate', 54.99, '2026-03-04 20:20:30', 'Tech', 5),
+(113, 'REST APIs with Express', 'Create scalable RESTful APIs from scratch.', 2, 'intermediate', 54.99, '2026-03-04 20:20:30', 'Tech', 6),
+(114, 'AWS Cloud Foundations', 'Understand core AWS services and architecture.', 1, 'beginner', 64.99, '2026-03-04 20:20:30', 'Tech', 7),
+(115, 'Next.js for Production', 'Build fast React apps with SSR and routing.', 2, 'advanced', 69.99, '2026-03-04 20:20:30', 'Tech', 6),
+(116, 'SQL for Developers', 'Master queries, joins, and indexes.', 3, 'beginner', 39.99, '2026-03-04 20:20:30', 'Data', 5),
+(117, 'GraphQL Essentials', 'Flexible APIs with Apollo and GraphQL.', 2, 'intermediate', 54.99, '2026-03-04 20:20:30', 'Tech', 4),
+(118, 'Cybersecurity Basics', 'Protect systems and networks from attacks.', 1, 'beginner', 49.99, '2026-03-04 20:20:30', 'Tech', 6),
+(119, 'Machine Learning Intro', 'Supervised models and evaluation techniques.', 3, 'intermediate', 64.99, '2026-03-04 20:20:30', 'Data', 8),
+(120, 'Kubernetes Fundamentals', 'Container orchestration and scaling.', 2, 'advanced', 69.99, '2026-03-04 20:20:30', 'Tech', 7),
+(121, 'Mobile Apps with React Native', 'Build cross-platform apps for iOS and Android.', 2, 'intermediate', 59.99, '2026-03-04 20:20:30', 'Tech', 6),
+(122, 'DevOps Foundations', 'CI/CD pipelines and automation workflows.', 1, 'beginner', 49.99, '2026-03-04 20:20:30', 'Tech', 5),
+(123, 'Figma for Designers', 'Prototyping and collaboration for UI teams.', 4, 'beginner', 39.99, '2026-03-04 20:20:30', 'Design', 3),
+(124, 'Clean Code Practices', 'Write maintainable and readable software.', 2, 'intermediate', 54.99, '2026-03-04 20:20:30', 'Tech', 4),
+(125, 'Blockchain Fundamentals', 'Distributed ledgers and smart contracts.', 2, 'beginner', 59.99, '2026-03-04 20:20:30', 'Tech', 6),
+(126, 'C# for Web Development', 'Build web apps using ASP.NET Core.', 2, 'intermediate', 54.99, '2026-03-04 20:20:30', 'Tech', 7),
+(127, 'iOS Development with Swift', 'Create native apps for Apple devices.', 2, 'advanced', 74.99, '2026-03-04 20:20:30', 'Tech', 9),
+(128, 'Android with Kotlin', 'Modern Android app development techniques.', 2, 'intermediate', 64.99, '2026-03-04 20:20:30', 'Tech', 8),
+(129, 'Power BI Analytics', 'Build dashboards and business insights.', 1, 'beginner', 49.99, '2026-03-04 20:20:30', 'Business', 5),
+(130, 'Excel for Professionals', 'Advanced formulas, pivot tables and automation.', 1, 'beginner', 44.99, '2026-03-04 20:20:30', 'Business', 4),
+(131, 'NoSQL with MongoDB', 'Document databases and schema design.', 3, 'intermediate', 54.99, '2026-03-04 20:20:30', 'Data', 6),
+(132, 'Linux Command Line', 'Shell scripting and system navigation.', 1, 'beginner', 39.99, '2026-03-04 20:20:30', 'Tech', 3),
+(133, 'Ethical Hacking Intro', 'Pen testing concepts and methodologies.', 2, 'advanced', 69.99, '2026-03-04 20:20:30', 'Tech', 7),
+(134, 'Data Visualization with D3', 'Create interactive charts for the web.', 3, 'advanced', 64.99, '2026-03-04 20:20:30', 'Data', 6),
+(135, 'Project Management Agile', 'Scrum, Kanban and delivery strategies.', 1, 'beginner', 49.99, '2026-03-04 20:20:30', 'Business', 4),
+(136, 'Product Design Sprint', 'Validate ideas quickly using workshops.', 4, 'intermediate', 54.99, '2026-03-04 20:20:30', 'Product', 5),
+(137, 'SEO Fundamentals', 'Optimize websites for search engines.', 4, 'beginner', 39.99, '2026-03-04 20:20:30', 'Marketing', 3),
+(138, 'Marketing Analytics', 'Track campaigns and ROI with data.', 4, 'intermediate', 49.99, '2026-03-04 20:20:30', 'Marketing', 4),
+(139, 'Game Development Basics', 'Core loops and engines for indie games.', 1, 'beginner', 49.99, '2026-03-04 20:20:30', 'Tech', 6),
+(140, 'Unity for Developers', '3D game creation with Unity engine.', 2, 'advanced', 74.99, '2026-03-04 20:20:30', 'Tech', 9),
+(141, 'AI Prompt Engineering', 'Craft better prompts for large language models.', 1, 'beginner', 29.99, '2026-03-04 20:20:30', 'Tech', 2),
+(142, 'Natural Language Processing', 'Text analysis and transformers basics.', 3, 'advanced', 69.99, '2026-03-04 20:20:30', 'Data', 8),
+(143, 'Big Data with Spark', 'Distributed processing and analytics.', 3, 'advanced', 64.99, '2026-03-04 20:20:30', 'Data', 7),
+(144, 'Web Accessibility', 'Build inclusive apps following WCAG.', 4, 'beginner', 39.99, '2026-03-04 20:20:30', 'Design', 3),
+(145, 'Go for Backend Services', 'Fast APIs using Go and microservices.', 2, 'intermediate', 54.99, '2026-03-04 20:20:30', 'Tech', 6),
+(146, 'Rust Fundamentals', 'Memory-safe systems programming.', 2, 'advanced', 64.99, '2026-03-04 20:20:30', 'Tech', 7),
+(147, 'Digital Marketing Foundations', 'Learn core concepts of online advertising, funnels and growth.', 4, 'beginner', 44.99, '2026-03-04 20:20:30', 'Marketing', 4),
+(148, 'Content Strategy & Branding', 'Create content plans and brand voice for social platforms.', 4, 'intermediate', 49.99, '2026-03-04 20:20:30', 'Marketing', 5),
+(149, 'Paid Ads Mastery', 'Run high-converting campaigns on Google and Meta platforms.', 4, 'advanced', 59.99, '2026-03-04 20:20:30', 'Marketing', 6),
+(150, 'Email Marketing Automation', 'Build sequences and funnels with automation tools.', 4, 'intermediate', 49.99, '2026-03-04 20:20:30', 'Marketing', 4),
+(151, 'Social Media Growth Playbook', 'Grow audiences and engagement organically.', 4, 'beginner', 39.99, '2026-03-04 20:20:30', 'Marketing', 3),
+(152, 'Startup Fundamentals', 'Validate ideas, build MVPs and launch products.', 1, 'beginner', 49.99, '2026-03-04 20:20:30', 'Business', 5),
+(153, 'Business Strategy Essentials', 'Competitive analysis and market positioning.', 1, 'intermediate', 59.99, '2026-03-04 20:20:30', 'Business', 6),
+(154, 'Finance for Entrepreneurs', 'Cash flow, pricing models and budgeting basics.', 1, 'intermediate', 54.99, '2026-03-04 20:20:30', 'Business', 5),
+(155, 'Leadership & Team Management', 'Build strong teams and effective communication.', 1, 'beginner', 49.99, '2026-03-04 20:20:30', 'Business', 4),
+(156, 'Operations & Scaling', 'Systems, processes and growth frameworks.', 1, 'advanced', 59.99, '2026-03-04 20:20:30', 'Business', 6);
+--
+-- Dumping data for table `cart_items`
+--
+
+INSERT INTO `cart_items` (`cart_id`, `user_id`, `course_id`, `added_at`) VALUES
+(1, 1, 106, '2026-03-10 20:47:04'),
+(2, 2, 107, '2026-03-10 20:47:04'),
+(3, 3, 108, '2026-03-10 20:47:04'),
+(4, 4, 109, '2026-03-10 20:47:04'),
+(5, 5, 110, '2026-03-10 20:47:04'),
+(6, 6, 111, '2026-03-10 20:47:04'),
+(7, 7, 112, '2026-03-10 20:47:04'),
+(8, 8, 113, '2026-03-10 20:47:04'),
+(9, 9, 114, '2026-03-10 20:47:04'),
+(10, 10, 115, '2026-03-10 20:47:04'),
+(11, 11, 116, '2026-03-10 20:47:04'),
+(12, 12, 117, '2026-03-10 20:47:04'),
+(13, 13, 118, '2026-03-10 20:47:04'),
+(14, 14, 119, '2026-03-10 20:47:04'),
+(15, 15, 120, '2026-03-10 20:47:04'),
+(16, 16, 121, '2026-03-10 20:47:04'),
+(17, 17, 122, '2026-03-10 20:47:04'),
+(18, 18, 123, '2026-03-10 20:47:04'),
+(19, 19, 124, '2026-03-10 20:47:04'),
+(20, 20, 125, '2026-03-10 20:47:04'),
+(21, 21, 126, '2026-03-10 20:47:04'),
+(22, 22, 127, '2026-03-10 20:47:04'),
+(23, 23, 128, '2026-03-10 20:47:04'),
+(24, 24, 129, '2026-03-10 20:47:04'),
+(25, 25, 130, '2026-03-10 20:47:04'),
+(26, 26, 131, '2026-03-10 20:47:04'),
+(27, 27, 132, '2026-03-10 20:47:04'),
+(28, 28, 133, '2026-03-10 20:47:04'),
+(29, 29, 134, '2026-03-10 20:47:04'),
+(30, 30, 105, '2026-03-10 20:47:04');
+
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `enrollments`
+--
+
+INSERT INTO `enrollments` (`enrollment_id`, `user_id`, `course_id`, `progress`, `enrolled_at`) VALUES
+(31, 1, 105, 20, '2026-03-10 20:47:04'),
+(32, 2, 106, 50, '2026-03-10 20:47:04'),
+(33, 3, 107, 100, '2026-03-10 20:47:04'),
+(34, 4, 108, 70, '2026-03-10 20:47:04'),
+(35, 5, 109, 30, '2026-03-10 20:47:04'),
+(36, 6, 110, 10, '2026-03-10 20:47:04'),
+(37, 7, 111, 0, '2026-03-10 20:47:04'),
+(38, 8, 112, 60, '2026-03-10 20:47:04'),
+(39, 9, 113, 90, '2026-03-10 20:47:04'),
+(40, 10, 114, 40, '2026-03-10 20:47:04'),
+(41, 11, 115, 25, '2026-03-10 20:47:04'),
+(42, 12, 116, 50, '2026-03-10 20:47:04'),
+(43, 13, 117, 70, '2026-03-10 20:47:04'),
+(44, 14, 118, 20, '2026-03-10 20:47:04'),
+(45, 15, 119, 80, '2026-03-10 20:47:04'),
+(46, 16, 120, 0, '2026-03-10 20:47:04'),
+(47, 17, 121, 30, '2026-03-10 20:47:04'),
+(48, 18, 122, 60, '2026-03-10 20:47:04'),
+(49, 19, 123, 90, '2026-03-10 20:47:04'),
+(50, 20, 124, 40, '2026-03-10 20:47:04'),
+(51, 21, 125, 10, '2026-03-10 20:47:04'),
+(52, 22, 126, 50, '2026-03-10 20:47:04'),
+(53, 23, 127, 70, '2026-03-10 20:47:04'),
+(54, 24, 128, 80, '2026-03-10 20:47:04'),
+(55, 25, 129, 60, '2026-03-10 20:47:04'),
+(56, 26, 130, 0, '2026-03-10 20:47:04'),
+(57, 27, 131, 20, '2026-03-10 20:47:04'),
+(58, 28, 132, 30, '2026-03-10 20:47:04'),
+(59, 29, 133, 50, '2026-03-10 20:47:04'),
+(60, 30, 134, 100, '2026-03-10 20:47:04');
+
+
+-- --------------------------------------------------------
+
+--
 -- Dumping data for table `reviews`
 --
 
@@ -217,38 +255,3 @@ INSERT INTO `reviews` (`review_id`, `user_id`, `course_id`, `rating`, `comment`,
 
 -- --------------------------------------------------------
 
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password_hash`, `role`, `created_at`) VALUES
-(1, 'Emma', 'Johnson', 'emma.johnson@example.com', '$2y$10$eKJtn6DVzg9JHiOPJPEOmeXYX5teD0LzkLElFRy5TVRg5M.oNs5ea', 'student', '2026-03-11 19:46:01'),
-(2, 'Liam', 'Williams', 'liam.williams@example.com', '$2y$10$D9A2PJA2JzyRoCsHmLiu6O28wcUwBAA6y/oQJR5oV4qR8Ojc1hdXS', 'student', '2026-03-11 19:46:01'),
-(3, 'Olivia', 'Brown', 'olivia.brown@example.com', '$2y$10$pp1CFL0EtqEJB0bNqhu.zONHn4YAFlMKQqOclBB4e7hEZYmH94Ih2', 'student', '2026-03-11 19:46:01'),
-(4, 'Noah', 'Jones', 'noah.jones@example.com', '$2y$10$GWm3zu.08KcJ/6n1QfA.Ruz8f/kxyrpduwIk5XFP.EN01nxqMP68C', 'student', '2026-03-11 19:46:01'),
-(5, 'Ava', 'Garcia', 'ava.garcia@example.com', '$2y$10$WHT9P.gFpCjXNRs5ZoR0cOHbt6edZENu.7NyYIe2ywwney46aaVp.', 'student', '2026-03-11 19:46:01'),
-(6, 'Elijah', 'Martinez', 'elijah.martinez@example.com', '$2y$10$LRWLjO6Ivq4rjZLJYrmqveuqprEozDCn7WdaoAIC581UwPcgpPUzO', 'student', '2026-03-11 19:46:01'),
-(7, 'Sophia', 'Rodriguez', 'sophia.rodriguez@example.com', '$2y$10$y1rUuDmWjK4SYrGHhx8.O.wiKqqQ0SDB4buRnySIsVOjS47vgkWYi', 'student', '2026-03-11 19:46:01'),
-(8, 'James', 'Lee', 'james.lee@example.com', '$2y$10$9/ks2hdfLnBFut7kagy87uULqheVGQ83j2iBQdKJnlTNBPOjTgXpC', 'student', '2026-03-11 19:46:01'),
-(9, 'Isabella', 'Walker', 'isabella.walker@example.com', '$2y$10$f.bDv7XiaAePo.H2QQ1byeAU8OYndZQ7G.6XvqbEWpArVvos9JH6S', 'student', '2026-03-11 19:46:01'),
-(10, 'Benjamin', 'Hall', 'benjamin.hall@example.com', '$2y$10$rZq8nbBy87lTeqklTi9GD.JZlMZH7l0B8RzXO78maSMje/d.mDDPS', 'student', '2026-03-11 19:46:01'),
-(11, 'Mia', 'Allen', 'mia.allen@example.com', '$2y$10$kab1yMHnt38.UXR47pEBV.G/NlPg37z74Er.5Vb.VV6EakGmrTiRe', 'student', '2026-03-11 19:46:01'),
-(12, 'Lucas', 'Young', 'lucas.young@example.com', '$2y$10$nm1FQdG7cbaJlpHh5NbHfOMJV.luoHxrpraDIbcWajSKjLhmwqPmm', 'student', '2026-03-11 19:46:02'),
-(13, 'Charlotte', 'Hernandez', 'charlotte.hernandez@example.com', '$2y$10$Vrv4D2X7mDLLTl58FBKagOdpXKGBAPASr0mXJCDXguiSe4VB0S2vO', 'student', '2026-03-11 19:46:02'),
-(14, 'Mason', 'King', 'mason.king@example.com', '$2y$10$T96GfC8XAuG7e6/pbW6d4.p42ski364DgLp0ohKnCtXmIdspIEt3G', 'student', '2026-03-11 19:46:02'),
-(15, 'Amelia', 'Wright', 'amelia.wright@example.com', '$2y$10$J9lNdTKFc3XfSmLSI/tg7OokAHSGvkAGIa6MKiFPRea5eZjzLx/oa', 'student', '2026-03-11 19:46:02'),
-(16, 'Ethan', 'Lopez', 'ethan.lopez@example.com', '$2y$10$9LJbCwPefaT93MNwuh8NfO8VbTcesFGG2Bra/fu7cg2eymbh2lKoC', 'student', '2026-03-11 19:46:02'),
-(17, 'Harper', 'Hill', 'harper.hill@example.com', '$2y$10$w7JXqoaqhZcDHmqbiMvca.BMfl76FiTocNjc7zmA2oldBZaSh95/u', 'student', '2026-03-11 19:46:02'),
-(18, 'Alexander', 'Scott', 'alexander.scott@example.com', '$2y$10$X53gFNdPcIhQiLk/BJkMxOUf3QKHIg6CQ8/cvyT1qT96l7qqR4TxG', 'student', '2026-03-11 19:46:02'),
-(19, 'Evelyn', 'Green', 'evelyn.green@example.com', '$2y$10$kQgwtqvBKIsT00gFbrcnfebVO2/zekyYLctFxZFwSr5OUtvCbE9bu', 'student', '2026-03-11 19:46:02'),
-(20, 'Henry', 'Adams', 'henry.adams@example.com', '$2y$10$jzIdP.CI1t49maIi2bllgOpMfVTFd7vifRyCdNley7mY4U5kP7SAK', 'student', '2026-03-11 19:46:02'),
-(21, 'Abigail', 'Baker', 'abigail.baker@example.com', '$2y$10$Ef3hcqR.mlNEiLGPQDfN8eLKIwB4nYBpPUTH8uH3WjlSuU2TG0hhe', 'student', '2026-03-11 19:46:02'),
-(22, 'Sebastian', 'Nelson', 'sebastian.nelson@example.com', '$2y$10$liyJt.He61UVZMFMCdT/MeIBlo6Ju.F5zMR4D3ovWAJD2yqdDh3hW', 'student', '2026-03-11 19:46:02'),
-(23, 'Ella', 'Carter', 'ella.carter@example.com', '$2y$10$dJLc2DdfoqAN8Fq/pfx4VOhjDRrEqJ.tr6e/Bx3a/iu71pvPKMt0W', 'student', '2026-03-11 19:46:02'),
-(24, 'Jack', 'Mitchell', 'jack.mitchell@example.com', '$2y$10$cOiAm5lOGLQ78V4zwrT56ud2ABxsmqDNl9qPvHLy7FOdTdo4BF3Au', 'student', '2026-03-11 19:46:02'),
-(25, 'Scarlett', 'Perez', 'scarlett.perez@example.com', '$2y$10$USKX15lCBzXTqWVu4CSF7.Nmda8YRRHeyLPqRhJQoAIpiPu7hQcPa', 'student', '2026-03-11 19:46:02'),
-(26, 'Owen', 'Roberts', 'owen.roberts@example.com', '$2y$10$T3HO9mifCad8pRDgCYOOaOzJogeal82zq8WO1WcmKNvtdJXPdpoey', 'student', '2026-03-11 19:46:02'),
-(27, 'Grace', 'Turner', 'grace.turner@example.com', '$2y$10$tXj0dWw93sFLSoQYh5lNSeaJG65II2P8U4AERhGKenuLi3Q5pYdIK', 'student', '2026-03-11 19:46:03'),
-(28, 'Leo', 'Phillips', 'leo.phillips@example.com', '$2y$10$RwqULVvOAYG2xBfMd2K6QuOjQlfZLLb2RYTEUObT1dwsMHuHKk8ve', 'student', '2026-03-11 19:46:03'),
-(29, 'Chloe', 'Campbell', 'chloe.campbell@example.com', '$2y$10$E1iaeCq6XHuRIKj9u1tOgOWVy9BfakXqnyl9TIGNcXSn06QzGI8iq', 'student', '2026-03-11 19:46:03'),
-(30, 'Daniel', 'Parker', 'daniel.parker@example.com', '$2y$10$PYGNMOU8Xtqf2JD4skacW.qUBcGV0QAONBEinLb/AnZCNb8jQqfJ6', 'student', '2026-03-11 19:46:03');
