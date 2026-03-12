@@ -1,4 +1,5 @@
 <?php
+
     define("DB_SERVER","localhost");
     define("DB_USER","phpagent");
     define("DB_PASS","test123");
