@@ -18,9 +18,9 @@ Verify that a new user can register successfully.
 Request body
 
 {
-  "first_name": "Bella",
-  "last_name": "Marcucci",
-  "email": "bella@test.com",
+  "first_name": "Milad",
+  "last_name": "Torabi",
+  "email": "milad@test.com",
   "password": "password123"
 }
 
@@ -43,8 +43,8 @@ Verify validation when required fields are missing.
 Request body
 
 {
-  "first_name": "Bella",
-  "email": "bella@test.com",
+  "first_name": "Milad",
+  "email": "milad@test.com",
   "password": "password123"
 }
 
@@ -66,9 +66,9 @@ Verify email validation.
 Request body
 
 {
-  "first_name": "Bella",
-  "last_name": "Marcucci",
-  "email": "bella-test.com",
+  "first_name": "Milad",
+  "last_name": "Torabi",
+  "email": milad-t@test.com
   "password": "password123"
 }
 
@@ -90,9 +90,9 @@ Verify minimum password length validation.
 Request body
 
 {
-  "first_name": "Bella",
-  "last_name": "Marcucci",
-  "email": "bella2@test.com",
+  "first_name": "Milad",
+  "last_name": "Torabi",
+  "email": milad-t@test.com
   "password": "123"
 }
 
@@ -134,7 +134,7 @@ Verify user can authenticate successfully.
 Request body
 
 {
-  "email": "bella@test.com",
+  "email": milad@test.com
   "password": "password123"
 }
 
@@ -299,7 +299,7 @@ User must be logged in.
 Request body
 
 {
-  "course_id": 1
+  "course_id": 120
 }
 
 Expected result
