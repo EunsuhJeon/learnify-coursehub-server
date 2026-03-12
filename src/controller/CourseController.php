@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../config/Database.php';
 require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../helpers/sanitizers.php';
+require_once __DIR__ . '/../helpers/logger.php';
 
 class CoursesController
 {
@@ -15,8 +16,8 @@ class CoursesController
 
     public function index()
     {
-        $search = isset($_GET['search']) ? trim((string)$_GET['search']) : '';
-        $page = max(1, (int)($_GET['page'] ?? 1));
+        $search = isset($_GET['search']) ? trim((string) $_GET['search']) : '';
+        $page = max(1, (int) ($_GET['page'] ?? 1));
         $offset = ($page - 1) * self::PER_PAGE;
 
         $sql = "
@@ -36,62 +37,81 @@ class CoursesController
 
         $params = [];
 
-        if($search && $search !== ''){
+        if ($search && $search !== '') {
             $sql .= " WHERE (c.title LIKE :search OR c.description LIKE :search)";
             $params['search'] = "%$search%";
         }
 
-        $sql .= " ORDER BY c.created_at DESC LIMIT " . self::PER_PAGE . " OFFSET " . (int)$offset;
-        
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
-        $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql .= " ORDER BY c.created_at DESC LIMIT " . self::PER_PAGE . " OFFSET " . (int) $offset;
 
-        successResponse([
-        'courses' => $courses,
-        'page' => $page,
-        'per_page' => self::PER_PAGE,
-        'count' => count($courses)
-        ], 'Courses retrived.');
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($params);
+            $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            successResponse([
+                'courses' => $courses,
+                'page' => $page,
+                'per_page' => self::PER_PAGE,
+                'count' => count($courses)
+            ], 'Courses retrived.');
+        } catch (Throwable $e) {
+            logError('Course list failed', [
+                'search' => $search,
+                'page' => $page,
+                'error' => $e->getMessage()
+            ]);
+
+            errorResponse('Failed to retrieve courses. Please try again.', 500);
+        }
     }
 
     public function show($id)
     {
-        $id = (int)$id;
-        if($id <= 0){
+        $id = (int) $id;
+        if ($id <= 0) {
             errorResponse('Invalid course ID.', 400);
         }
 
-        $stmt = $this->pdo->prepare("
-            SELECT 
-                c.course_id,
-                c.title,
-                c.description,
-                c.instructor_id,
-                c.level,
-                c.price,
-                c.created_at,
-                c.theme,
-                c.duration,
-                i.name AS instructor_name,
-                i.title AS instructor_title,
-                i.students_count,
-                i.courses_count,
-                i.instructor_rating,
-                i.bio AS instructor_bio
-            FROM courses c
-            INNER JOIN instructors i 
-            ON c.instructor_id = i.instructor_id
-            WHERE c.course_id = :id
-        ");
-        $stmt->execute(['id' => $id]);
-        $course = $stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT 
+                    c.course_id,
+                    c.title,
+                    c.description,
+                    c.instructor_id,
+                    c.level,
+                    c.price,
+                    c.created_at,
+                    c.theme,
+                    c.duration,
+                    i.name AS instructor_name,
+                    i.title AS instructor_title,
+                    i.students_count,
+                    i.courses_count,
+                    i.instructor_rating,
+                    i.bio AS instructor_bio
+                FROM courses c
+                INNER JOIN instructors i 
+                ON c.instructor_id = i.instructor_id
+                WHERE c.course_id = :id
+            ");
+            $stmt->execute(['id' => $id]);
+            $course = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if(!$course){
-            errorResponse('Course not found', 404);
+            if (!$course) {
+                errorResponse('Course not found', 404);
+            }
+
+            successResponse($course, 'Course Details Retrieved.');
+        } catch (Throwable $e) {
+            logError('Course details failed', [
+                'course_id' => $id,
+                'error' => $e->getMessage()
+            ]);
+
+            errorResponse('Failed to retrieve course details. Please try again.', 500);
         }
-
-        successResponse($course, 'Course Details Retrieved.');
     }
 }
 ?>
