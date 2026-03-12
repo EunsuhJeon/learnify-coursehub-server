@@ -105,5 +105,69 @@ class ReviewController
             ]
         ], 'Review Created.', 201);
     }
+
+    public function destroy($courseId, $reviewId)
+    {
+        requireAdmin(); // admin only
+
+        $reviewId = (int)$reviewId;
+        if ($reviewId <= 0) {
+            errorResponse('Invalid review ID.', 400);
+        }
+
+        $stmt = $this->pdo->prepare("
+            DELETE FROM reviews
+            WHERE review_id = :review_id AND course_id = :course_id
+        ");
+        $stmt->execute(['review_id' => $reviewId, 'course_id' => (int)$courseId]);
+
+        if ($stmt->rowCount() === 0) {
+            errorResponse('Review not found.', 404);
+        }
+
+        logAudit('DELETE', 'reviews', $reviewId);
+        successResponse([], 'Review deleted.');
+    }
+    public function update($courseId, $reviewId)
+    {
+        requireAuth();
+
+        $reviewId = (int)$reviewId;
+        $courseId = (int)$courseId;
+        $userId = (int)currentUserId();
+
+        $stmt = $this->pdo->prepare("
+            SELECT review_id FROM reviews
+            WHERE review_id = :rid AND course_id = :cid AND user_id = :uid
+        ");
+        $stmt->execute(['rid' => $reviewId, 'cid' => $courseId, 'uid' => $userId]);
+        $review = $stmt->fetch();
+
+        if (!$review) {
+            errorResponse('Review not found or you are not the owner.', 404);
+        }
+
+        $input = getJsonInput();
+        $rating = filter_var($input['rating'] ?? null, FILTER_VALIDATE_INT);
+        $commentRaw = $input['comment'] ?? '';
+        $comment = ($commentRaw !== '' && $commentRaw !== null) ? cleanString((string)$commentRaw) : '';
+
+        if ($rating === false || $rating < 1 || $rating > 5) {
+            errorResponse('Rating must be between 1 and 5.', 422);
+        }
+
+        $updateStmt = $this->pdo->prepare("
+            UPDATE reviews SET rating = :rating, comment = :comment
+            WHERE review_id = :review_id
+        ");
+        $updateStmt->execute([
+            'rating' => $rating,
+            'comment' => $comment,
+            'review_id' => $reviewId
+        ]);
+
+        logAudit('UPDATE', 'reviews', $reviewId);
+        successResponse(['review_id' => $reviewId], 'Review updated.');
+    }
 }
 ?>

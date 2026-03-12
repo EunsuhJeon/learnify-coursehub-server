@@ -66,6 +66,12 @@ if ($requestPath === '/register' && $method === 'POST') {
 } elseif (preg_match('#^/courses/(\d+)/reviews$#', $requestPath, $m) && $method === 'POST') {
     $controller = new ReviewController();
     $controller->store($m[1]);
+} elseif (preg_match('#^/courses/(\d+)/reviews/(\d+)$#', $requestPath, $m) && $method === 'DELETE') {
+    $controller = new ReviewController();
+    $controller->destroy($m[1], $m[2]);
+} elseif (preg_match('#^/courses/(\d+)/reviews/(\d+)$#', $requestPath, $m) && $method === 'PATCH') {
+    $controller = new ReviewController();
+    $controller->update($m[1], $m[2]);
 } else {
     errorResponse('Route not found: ' . $requestPath, 404);
 }
