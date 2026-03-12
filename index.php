@@ -7,6 +7,7 @@ require_once __DIR__ . '/src/helpers/response.php';
 require_once __DIR__ . '/src/controller/AuthController.php';
 require_once __DIR__ . '/src/controller/CourseController.php';
 require_once __DIR__ . '/src/controller/ReviewController.php';
+require_once __DIR__ . '/src/controller/CartController.php';
 
 session_start();
 
@@ -33,6 +34,15 @@ if ($requestPath === '/register' && $method === 'POST') {
 } elseif ($requestPath === '/me' && $method === 'GET') {
     $authController = new AuthController();
     $authController->me();
+} elseif ($requestPath === '/cart' && $method === 'GET') {
+    $cartController = new CartController();
+    $cartController->index();
+} elseif ($requestPath === '/cart' && $method === 'POST') {
+    $cartController = new CartController();
+    $cartController->store();
+} elseif (preg_match('#^/cart/(\d+)$#', $requestPath, $matches) && $method === 'DELETE') {
+    $cartController = new CartController();
+    $cartController->destroy($matches[1]);
 } elseif ($requestPath === '/logout' && $method === 'POST') {
     $authController = new AuthController();
     $authController->logout();
