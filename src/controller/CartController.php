@@ -4,6 +4,7 @@ require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../helpers/sanitizers.php';
 require_once __DIR__ . '/../helpers/auth.php';
 require_once __DIR__ . '/../helpers/audit.php';
+require_once __DIR__ . '/../helpers/logger.php';
 
 class CartController
 {
@@ -14,13 +15,15 @@ class CartController
         $this->pdo = Database::getInstance()->getConnection();
     }
 
-    public function index(){
+    public function index()
+    {
         requireAuth();
-        
+
         $userId = (int) currentUserId();
-        
-        // Query to get the items in the cart
-        $itemsStmt = $this->pdo->prepare("
+
+        try {
+            // Query to get the items in the cart
+            $itemsStmt = $this->pdo->prepare("
             SELECT 
                 ci.cart_id,
                 ci.course_id,
@@ -33,11 +36,11 @@ class CartController
             ORDER BY ci.cart_id DESC
         ");
 
-        $itemsStmt->execute(['user_id' => $userId]);
-        $items = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
+            $itemsStmt->execute(['user_id' => $userId]);
+            $items = $itemsStmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Query to get the total price
-        $summaryStmt = $this->pdo->prepare("
+            // Query to get the total price
+            $summaryStmt = $this->pdo->prepare("
             SELECT 
                 COUNT(*) AS item_count,
                 COALESCE(SUM(c.price), 0) AS total_price
@@ -46,13 +49,21 @@ class CartController
             WHERE ci.user_id = :user_id
         ");
 
-        $summaryStmt->execute(['user_id' => $userId]);
-        $summary = $summaryStmt->fetch(PDO::FETCH_ASSOC);
+            $summaryStmt->execute(['user_id' => $userId]);
+            $summary = $summaryStmt->fetch(PDO::FETCH_ASSOC);
 
-        successResponse([
-            'items' => $items,
-            'summary' => $summary
-        ], 'Cart retrieved successfully.');
+            successResponse([
+                'items' => $items,
+                'summary' => $summary
+            ], 'Cart retrieved successfully.');
+        } catch (Throwable $e) {
+            logError('Cart retrieval failed', [
+                'user_id' => $userId,
+                'error' => $e->getMessage()
+            ]);
+
+            errorResponse('Failed to retrieve cart. Please try again.', 500);
+        }
     }
 
     public function store()
@@ -68,58 +79,70 @@ class CartController
             errorResponse('Valid course_id is required.', 422);
         }
 
-        // Query to check that the course exists
-        $courseStmt = $this->pdo->prepare("
-            SELECT course_id, title
-            FROM courses
-            WHERE course_id = :course_id
-            LIMIT 1
-        ");
+        try {
+            // Query to check that the course exists
+            $courseStmt = $this->pdo->prepare("
+                SELECT course_id, title
+                FROM courses
+                WHERE course_id = :course_id
+                LIMIT 1
+            ");
 
-        $courseStmt->execute(['course_id' => $courseId]);
-        $course = $courseStmt->fetch(PDO::FETCH_ASSOC);
+            $courseStmt->execute(['course_id' => $courseId]);
+            $course = $courseStmt->fetch(PDO::FETCH_ASSOC);
 
-        // If it does not exist, then send an error message
-        if (!$course) {
-            errorResponse('Course not found.', 404);
+            // If it does not exist, then send an error message
+            if (!$course) {
+                errorResponse('Course not found.', 404);
+            }
+
+            // Query to check that the course is not duplicated
+            $existingStmt = $this->pdo->prepare("
+                SELECT cart_id
+                FROM cart_items
+                WHERE user_id = :user_id AND course_id = :course_id
+                LIMIT 1
+            ");
+
+            $existingStmt->execute([
+                'user_id' => $userId,
+                'course_id' => $courseId
+            ]);
+
+            $existingItem = $existingStmt->fetch(PDO::FETCH_ASSOC);
+
+            // If it is duplicated, then send an error message
+            if ($existingItem) {
+                errorResponse('This course is already in the cart.', 409);
+            }
+
+            // Prepared Statement to add items in the cart
+            $insertStmt = $this->pdo->prepare("
+                INSERT INTO cart_items (user_id, course_id)
+                VALUES (:user_id, :course_id)
+            ");
+
+            $insertStmt->execute([
+                'user_id' => $userId,
+                'course_id' => $courseId
+            ]);
+
+            $cartId = (int) $this->pdo->lastInsertId();
+            logAudit('CREATE', 'cart_items', $cartId);
+
+            successResponse([
+                'cart_id' => $cartId,
+                'course_id' => $courseId
+            ], 'Course added to cart successfully.', 201);
+        } catch (Throwable $e) {
+            logError('Add to cart failed', [
+                'user_id' => $userId,
+                'course_id' => $courseId,
+                'error' => $e->getMessage()
+            ]);
+
+            errorResponse('Failed to add course to cart. Please try again.', 500);
         }
-
-        // Query to check that the course is not duplicated
-        $existingStmt = $this->pdo->prepare("
-            SELECT cart_id
-            FROM cart_items
-            WHERE user_id = :user_id AND course_id = :course_id
-            LIMIT 1
-        ");
-
-        $existingStmt->execute([
-            'user_id' => $userId,
-            'course_id' => $courseId
-        ]);
-
-        $existingItem = $existingStmt->fetch(PDO::FETCH_ASSOC);
-
-        // If it is duplicated, then send an error message
-        if ($existingItem) {
-            errorResponse('This course is already in the cart.', 409);
-        }
-
-        // Prepared Statement to add items in the cart
-        $insertStmt = $this->pdo->prepare("
-            INSERT INTO cart_items (user_id, course_id)
-            VALUES (:user_id, :course_id)
-        ");
-
-        $insertStmt->execute([
-            'user_id' => $userId,
-            'course_id' => $courseId
-        ]);
-        logAudit('CREATE', 'cart_items', $cartId);
-
-        successResponse([
-            'cart_id' => (int) $this->pdo->lastInsertId(),
-            'course_id' => $courseId
-        ], 'Course added to cart successfully.', 201);
     }
 
     public function destroy($cartId)
@@ -134,41 +157,51 @@ class CartController
             errorResponse('Valid cart_id is required.', 422);
         }
 
-        // Validate ownership of the cart with the user_id
-        $checkStmt = $this->pdo->prepare("
-            SELECT cart_id
-            FROM cart_items
-            WHERE cart_id = :cart_id AND user_id = :user_id
-            LIMIT 1
-        ");
+        try {
+            // Validate ownership of the cart with the user_id
+            $checkStmt = $this->pdo->prepare("
+                SELECT cart_id
+                FROM cart_items
+                WHERE cart_id = :cart_id AND user_id = :user_id
+                LIMIT 1
+            ");
 
-        $checkStmt->execute([
-            'cart_id' => $cartId,
-            'user_id' => $userId
-        ]);
+            $checkStmt->execute([
+                'cart_id' => $cartId,
+                'user_id' => $userId
+            ]);
 
-        $cartItem = $checkStmt->fetch(PDO::FETCH_ASSOC);
+            $cartItem = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$cartItem) {
-            errorResponse('Cart item not found.', 404);
+            if (!$cartItem) {
+                errorResponse('Cart item not found.', 404);
+            }
+            // ----------------------------------------------------------------
+
+
+            // After validations, if everything is correct, then run the query to delete
+            // an item from the cart
+            $deleteStmt = $this->pdo->prepare("
+                DELETE FROM cart_items
+                WHERE cart_id = :cart_id AND user_id = :user_id
+            ");
+
+            $deleteStmt->execute([
+                'cart_id' => $cartId,
+                'user_id' => $userId
+            ]);
+
+            logAudit('DELETE', 'cart_items', $cartId);
+
+            successResponse([], 'Cart item removed successfully.');
+        } catch (Throwable $e) {
+            logError('Remove from cart failed', [
+                'user_id' => $userId,
+                'cart_id' => $cartId,
+                'error' => $e->getMessage()
+            ]);
+
+            errorResponse('Failed to remove cart item. Please try again.', 500);
         }
-        // ----------------------------------------------------------------
-
-
-        // After validations, if everything is correct, then run the query to delete
-        // an item from the cart
-        $deleteStmt = $this->pdo->prepare("
-            DELETE FROM cart_items
-            WHERE cart_id = :cart_id AND user_id = :user_id
-        ");
-
-        $deleteStmt->execute([
-            'cart_id' => $cartId,
-            'user_id' => $userId
-        ]);
-
-        logAudit('DELETE', 'cart_items', $cartId);
-
-        successResponse([], 'Cart item removed successfully.');
     }
 }
