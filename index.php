@@ -8,6 +8,7 @@ require_once __DIR__ . '/src/controller/AuthController.php';
 require_once __DIR__ . '/src/controller/CourseController.php';
 require_once __DIR__ . '/src/controller/ReviewController.php';
 require_once __DIR__ . '/src/controller/CartController.php';
+require_once __DIR__ . '/src/controller/UserCoursesController.php';
 
 session_start();
 
@@ -43,9 +44,6 @@ if ($requestPath === '/register' && $method === 'POST') {
 } elseif (preg_match('#^/cart/(\d+)$#', $requestPath, $matches) && $method === 'DELETE') {
     $cartController = new CartController();
     $cartController->destroy($matches[1]);
-} elseif ($requestPath === '/logout' && $method === 'POST') {
-    $authController = new AuthController();
-    $authController->logout();
 } elseif ($requestPath === '/' && $method === 'GET') {
     successResponse([
         'project' => 'Learnify API'

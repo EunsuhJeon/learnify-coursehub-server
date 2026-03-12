@@ -3,6 +3,7 @@ require_once __DIR__ . '/../config/Database.php';
 require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../helpers/sanitizers.php';
 require_once __DIR__ . '/../helpers/auth.php';
+require_once __DIR__ . '/../helpers/audit.php';
 
 class AuthController
 {
@@ -65,6 +66,8 @@ class AuthController
         $_SESSION['user_id'] = $newUserId;
         $_SESSION['role'] = 'student';
 
+        logAudit('CREATE', 'users', $newUserId);
+
         successResponse([
             'token' => session_id(),
             'user' => [
@@ -75,6 +78,7 @@ class AuthController
                 'role' => 'student'
             ]
         ], 'User registered successfully.', 201);
+
     }
 
     public function login()
