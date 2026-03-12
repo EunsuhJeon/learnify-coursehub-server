@@ -4,6 +4,7 @@ require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../helpers/sanitizers.php';
 require_once __DIR__ . '/../helpers/auth.php';
 require_once __DIR__ . '/../helpers/audit.php';
+require_once __DIR__ . '/../helpers/logger.php';
 
 class AuthController
 {
@@ -35,50 +36,58 @@ class AuthController
             errorResponse('Password must be less than 72 characters long.', 422);
         }
 
-        $checkStmt = $this->pdo->prepare("SELECT user_id FROM users WHERE email = :email LIMIT 1");
-        $checkStmt->execute(['email' => $email]);
-        $existingUser = $checkStmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            $checkStmt = $this->pdo->prepare("SELECT user_id FROM users WHERE email = :email LIMIT 1");
+            $checkStmt->execute(['email' => $email]);
+            $existingUser = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($existingUser) {
-            errorResponse('Email already exists.', 409);
-        }
+            if ($existingUser) {
+                errorResponse('Email already exists.', 409);
+            }
 
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $insertStmt = $this->pdo->prepare("
-            INSERT INTO users (first_name, last_name, email, password_hash, role)
-            VALUES (:first_name, :last_name, :email, :password_hash, :role)
-        ");
+            $insertStmt = $this->pdo->prepare("
+                INSERT INTO users (first_name, last_name, email, password_hash, role)
+                VALUES (:first_name, :last_name, :email, :password_hash, :role)
+            ");
 
-        $insertStmt->execute([
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-            'email' => $email,
-            'password_hash' => $hashedPassword,
-            'role' => 'student'
-        ]);
-
-        ensureSessionStarted();
-        // to prevent session hijacking
-        session_regenerate_id(true);
-        $newUserId = (int) $this->pdo->lastInsertId();
-
-        $_SESSION['user_id'] = $newUserId;
-        $_SESSION['role'] = 'student';
-
-        logAudit('CREATE', 'users', $newUserId);
-
-        successResponse([
-            'token' => session_id(),
-            'user' => [
-                'user_id' => $newUserId,
+            $insertStmt->execute([
                 'first_name' => $firstName,
                 'last_name' => $lastName,
                 'email' => $email,
+                'password_hash' => $hashedPassword,
                 'role' => 'student'
-            ]
-        ], 'User registered successfully.', 201);
+            ]);
 
+            ensureSessionStarted();
+            // to prevent session hijacking
+            session_regenerate_id(true);
+            $newUserId = (int) $this->pdo->lastInsertId();
+
+            $_SESSION['user_id'] = $newUserId;
+            $_SESSION['role'] = 'student';
+
+            logAudit('CREATE', 'users', $newUserId);
+
+            successResponse([
+                'token' => session_id(),
+                'user' => [
+                    'user_id' => $newUserId,
+                    'first_name' => $firstName,
+                    'last_name' => $lastName,
+                    'email' => $email,
+                    'role' => 'student'
+                ]
+            ], 'User registered successfully.', 201);
+        } catch (Throwable $e) {
+            logError('Registration failed', [
+                'email' => $email,
+                'error' => $e->getMessage()
+            ]);
+
+            errorResponse('Registration failed. Please try again.', 500);
+        }
     }
 
     public function login()
@@ -91,35 +100,44 @@ class AuthController
         if (!$email || $password === '') {
             errorResponse('Invalid email or password.', 422);
         }
-
-        $stmt = $this->pdo->prepare("
+        try {
+            $stmt = $this->pdo->prepare("
             SELECT user_id, first_name, last_name, email, password_hash, role
             FROM users
             WHERE email = :email
             LIMIT 1
         ");
 
-        $stmt->execute(['email' => $email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->execute(['email' => $email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$user || !password_verify($password, $user['password_hash'])) {
-            errorResponse('Invalid email or password.', 401);
+            if (!$user || !password_verify($password, $user['password_hash'])) {
+                errorResponse('Invalid email or password.', 401);
+            }
+
+            ensureSessionStarted();
+            session_regenerate_id(true);
+            $_SESSION['user_id'] = (int) $user['user_id'];
+            $_SESSION['role'] = $user['role'];
+
+            successResponse([
+                'token' => session_id(),
+                'user' => [
+                    'user_id' => (int) $user['user_id'],
+                    'first_name' => $user['first_name'],
+                    'last_name' => $user['last_name'],
+                    'email' => $user['email'],
+                    'role' => $user['role']
+                ]
+            ], 'Login successful.');
+        } catch (Throwable $e) {
+            logError('Login failed', [
+                'email' => $email,
+                'error' => $e->getMessage()
+            ]);
+
+            errorResponse('Login failed. Please try again.', 500);
         }
-
-        ensureSessionStarted();
-        $_SESSION['user_id'] = (int) $user['user_id'];
-        $_SESSION['role'] = $user['role'];
-
-        successResponse([
-            'token' => session_id(),
-            'user' => [
-                'user_id' => (int) $user['user_id'],
-                'first_name' => $user['first_name'],
-                'last_name' => $user['last_name'],
-                'email' => $user['email'],
-                'role' => $user['role']
-            ]
-        ], 'Login successful.');
     }
 
     // Method to logout correctly
