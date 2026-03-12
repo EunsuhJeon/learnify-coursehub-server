@@ -3,6 +3,7 @@ require_once __DIR__ . '/../config/Database.php';
 require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../helpers/sanitizers.php';
 require_once __DIR__ . '/../helpers/auth.php';
+require_once __DIR__ . '/../helpers/audit.php';
 
 class ReviewController
 {
@@ -91,7 +92,9 @@ class ReviewController
         ]);
 
         $reviewId = (int)$this->pdo->lastInsertId();
-
+        
+        logAudit('CREATE', 'reviews', $reviewId);
+        
         successResponse([
             'review' => [
                 'review_id' => $reviewId,

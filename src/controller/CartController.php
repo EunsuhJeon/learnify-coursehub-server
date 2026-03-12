@@ -3,6 +3,7 @@ require_once __DIR__ . '/../config/Database.php';
 require_once __DIR__ . '/../helpers/response.php';
 require_once __DIR__ . '/../helpers/sanitizers.php';
 require_once __DIR__ . '/../helpers/auth.php';
+require_once __DIR__ . '/../helpers/audit.php';
 
 class CartController
 {
@@ -113,6 +114,7 @@ class CartController
             'user_id' => $userId,
             'course_id' => $courseId
         ]);
+        logAudit('CREATE', 'cart_items', $cartId);
 
         successResponse([
             'cart_id' => (int) $this->pdo->lastInsertId(),
@@ -164,6 +166,8 @@ class CartController
             'cart_id' => $cartId,
             'user_id' => $userId
         ]);
+
+        logAudit('DELETE', 'cart_items', $cartId);
 
         successResponse([], 'Cart item removed successfully.');
     }
