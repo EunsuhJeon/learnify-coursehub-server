@@ -39,7 +39,6 @@
                 errorResponse('Invalid course ID.', 400);
             }
 
-            // Verifica se já está inscrito
             $check = $this->pdo->prepare("
                 SELECT enrollment_id FROM enrollments
                 WHERE user_id = :user_id AND course_id = :course_id
