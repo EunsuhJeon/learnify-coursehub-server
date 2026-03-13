@@ -42,7 +42,7 @@ class AuthController
             $existingUser = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
             if ($existingUser) {
-                errorResponse('Email already exists.', 409);
+                errorResponse('Invalid data.', 409);
             }
 
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
